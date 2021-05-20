@@ -1,0 +1,299 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="In VPSnew user [可选]123# 可能需要root权限useradd git[or other name you like]passwd git   Install gitCentOS&#x2F;Fedora: yum install gitUbuntu&#x2F;Debian: apt-get install git Add SSH key看到有人说用这个 1cat .ssh&#x2F;id_rsa.">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Create git repo in vps">
+<meta property="og:url" content="http://aniao.space/2017/12/12/create-git-repo-in-vps/index.html">
+<meta property="og:site_name" content="Aniao&#39;s nest">
+<meta property="og:description" content="In VPSnew user [可选]123# 可能需要root权限useradd git[or other name you like]passwd git   Install gitCentOS&#x2F;Fedora: yum install gitUbuntu&#x2F;Debian: apt-get install git Add SSH key看到有人说用这个 1cat .ssh&#x2F;id_rsa.">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-12-12T04:25:42.000Z">
+<meta property="article:modified_time" content="2021-04-30T13:12:25.720Z">
+<meta property="article:author" content="Aniao">
+<meta property="article:tag" content="linux">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Create git repo in vps</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2017/12/12/Virtualenv-Tutorial/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2017/12/06/Package-Name-and-Application-ID/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aniao.space/2017/12/12/create-git-repo-in-vps/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&text=Create git repo in vps"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&title=Create git repo in vps"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&is_video=false&description=Create git repo in vps"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Create git repo in vps&body=Check out this article: http://aniao.space/2017/12/12/create-git-repo-in-vps/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&title=Create git repo in vps"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&title=Create git repo in vps"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&title=Create git repo in vps"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&title=Create git repo in vps"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&name=Create git repo in vps&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aniao.space/2017/12/12/create-git-repo-in-vps/&t=Create git repo in vps"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#In-VPS"><span class="toc-number">1.</span> <span class="toc-text">In VPS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#new-user-%E5%8F%AF%E9%80%89"><span class="toc-number">1.1.</span> <span class="toc-text">new user [可选]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-git"><span class="toc-number">1.2.</span> <span class="toc-text">Install git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Add-SSH-key"><span class="toc-number">1.3.</span> <span class="toc-text">Add SSH key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#init-git"><span class="toc-number">1.4.</span> <span class="toc-text">init git</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#In-local"><span class="toc-number">2.</span> <span class="toc-text">In local</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%AB%AF%E5%8F%A3"><span class="toc-number">2.1.</span> <span class="toc-text">配置端口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%ADinit-git%E5%90%8E%E9%85%8D%E7%BD%AEremote"><span class="toc-number">2.2.</span> <span class="toc-text">在项目中init git后配置remote</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Create git repo in vps
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Aniao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-12-12T04:25:42.000Z" itemprop="datePublished">2017-12-12</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/linux/" rel="tag">linux</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h1 id="In-VPS"><a href="#In-VPS" class="headerlink" title="In VPS"></a>In VPS</h1><h2 id="new-user-可选"><a href="#new-user-可选" class="headerlink" title="new user [可选]"></a>new user [可选]</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line"># 可能需要root权限</span><br><span class="line">useradd git[or other name you like]</span><br><span class="line">passwd git </span><br></pre></td></tr></table></figure>
+
+<h2 id="Install-git"><a href="#Install-git" class="headerlink" title="Install git"></a>Install git</h2><p>CentOS/Fedora: <code>yum install git</code><br>Ubuntu/Debian: <code>apt-get install git</code></p>
+<h2 id="Add-SSH-key"><a href="#Add-SSH-key" class="headerlink" title="Add SSH key"></a>Add SSH key</h2><p>看到有人说用这个</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">cat .ssh&#x2F;id_rsa.pub | ssh user@ip &quot;cat &gt;&gt; ~&#x2F;.ssh&#x2F;authorized_keys&quot;</span><br></pre></td></tr></table></figure>
+<p>但是没太看懂这个命令, 直接把<del>/.ssh/id_rsa.pub复制到</del>/.ssh/authorized_keys里算数了 XD</p>
+<h2 id="init-git"><a href="#init-git" class="headerlink" title="init git"></a>init git</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">git init --bare repo-name.git</span><br></pre></td></tr></table></figure>
+
+<p>至此服务器也算配完了, 其实也没干嘛, 新建用户懒得再配权限所以最终用的也是之前的用户登的…</p>
+<h1 id="In-local"><a href="#In-local" class="headerlink" title="In local"></a>In local</h1><h2 id="配置端口"><a href="#配置端口" class="headerlink" title="配置端口"></a>配置端口</h2><p>banwagon的VPS端口随机分配的, 而git默认的端口是22. 在~/.ssh/config里配置</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Host ip[or domain]</span><br><span class="line">Port 端口号</span><br></pre></td></tr></table></figure>
+
+<h2 id="在项目中init-git后配置remote"><a href="#在项目中init-git后配置remote" class="headerlink" title="在项目中init git后配置remote"></a>在项目中init git后配置remote</h2><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">git remote set-url origin [user]@[ip]:[repo-name.git]</span><br><span class="line"># 第一次push配置一下url</span><br><span class="line">git push --set-upstream origin master</span><br></pre></td></tr></table></figure>
+<p>然后正常使用Git就OK</p>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#In-VPS"><span class="toc-number">1.</span> <span class="toc-text">In VPS</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#new-user-%E5%8F%AF%E9%80%89"><span class="toc-number">1.1.</span> <span class="toc-text">new user [可选]</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Install-git"><span class="toc-number">1.2.</span> <span class="toc-text">Install git</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#Add-SSH-key"><span class="toc-number">1.3.</span> <span class="toc-text">Add SSH key</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#init-git"><span class="toc-number">1.4.</span> <span class="toc-text">init git</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#In-local"><span class="toc-number">2.</span> <span class="toc-text">In local</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%85%8D%E7%BD%AE%E7%AB%AF%E5%8F%A3"><span class="toc-number">2.1.</span> <span class="toc-text">配置端口</span></a></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9C%A8%E9%A1%B9%E7%9B%AE%E4%B8%ADinit-git%E5%90%8E%E9%85%8D%E7%BD%AEremote"><span class="toc-number">2.2.</span> <span class="toc-text">在项目中init git后配置remote</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aniao.space/2017/12/12/create-git-repo-in-vps/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&text=Create git repo in vps"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&title=Create git repo in vps"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&is_video=false&description=Create git repo in vps"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Create git repo in vps&body=Check out this article: http://aniao.space/2017/12/12/create-git-repo-in-vps/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&title=Create git repo in vps"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&title=Create git repo in vps"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&title=Create git repo in vps"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&title=Create git repo in vps"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aniao.space/2017/12/12/create-git-repo-in-vps/&name=Create git repo in vps&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aniao.space/2017/12/12/create-git-repo-in-vps/&t=Create git repo in vps"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    Aniao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

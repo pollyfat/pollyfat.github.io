@@ -1,0 +1,398 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="基于TCP的客户端程序当一个基于TCP协议的客户端想要建立一个链接，但与链接目标之间有一个防火墙，则客户端必须打开一个TCP链接，链入SOCKS服务系统中合适的端口。该端口一般位于1080。如果连接成功，客户端将指定一个验证方法，然后发送一个轮询请求。服务器接到请求后，或建立，或拒绝。除非额外指定，否则在数据包格式图中出现的十进制数(字节）表示相应字段的长度。给出的八位字节必须指定值，X’hh’">
+<meta property="og:type" content="article">
+<meta property="og:title" content="socks5:一些笔记">
+<meta property="og:url" content="http://aniao.space/2017/03/10/socks5/index.html">
+<meta property="og:site_name" content="Aniao&#39;s nest">
+<meta property="og:description" content="基于TCP的客户端程序当一个基于TCP协议的客户端想要建立一个链接，但与链接目标之间有一个防火墙，则客户端必须打开一个TCP链接，链入SOCKS服务系统中合适的端口。该端口一般位于1080。如果连接成功，客户端将指定一个验证方法，然后发送一个轮询请求。服务器接到请求后，或建立，或拒绝。除非额外指定，否则在数据包格式图中出现的十进制数(字节）表示相应字段的长度。给出的八位字节必须指定值，X’hh’">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2017-03-10T15:00:00.000Z">
+<meta property="article:modified_time" content="2021-04-30T13:12:25.725Z">
+<meta property="article:author" content="Aniao">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>socks5:一些笔记</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2017/03/14/Python-SocketServer%E5%8E%9F%E7%90%86%E8%A7%A3%E6%9E%90/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2017/03/06/Graph-Easy/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aniao.space/2017/03/10/socks5/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aniao.space/2017/03/10/socks5/&text=socks5:一些笔记"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aniao.space/2017/03/10/socks5/&title=socks5:一些笔记"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aniao.space/2017/03/10/socks5/&is_video=false&description=socks5:一些笔记"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=socks5:一些笔记&body=Check out this article: http://aniao.space/2017/03/10/socks5/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aniao.space/2017/03/10/socks5/&title=socks5:一些笔记"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aniao.space/2017/03/10/socks5/&title=socks5:一些笔记"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aniao.space/2017/03/10/socks5/&title=socks5:一些笔记"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aniao.space/2017/03/10/socks5/&title=socks5:一些笔记"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aniao.space/2017/03/10/socks5/&name=socks5:一些笔记&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aniao.space/2017/03/10/socks5/&t=socks5:一些笔记"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8ETCP%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.</span> <span class="toc-text">基于TCP的客户端程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%AD%94"><span class="toc-number">1.2.</span> <span class="toc-text">应答</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ATYP%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.3.</span> <span class="toc-text">ATYP详解</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#CONNECT"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">CONNECT</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#BIND"><span class="toc-number">1.3.0.2.</span> <span class="toc-text">BIND</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#UDP-ASSOCIATE"><span class="toc-number">1.3.0.3.</span> <span class="toc-text">UDP ASSOCIATE</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#REP%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.4.</span> <span class="toc-text">REP详解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EUDP%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%A8%8B%E5%BA%8F"><span class="toc-number">2.</span> <span class="toc-text">基于UDP的客户端程序</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        socks5:一些笔记
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Aniao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2017-03-10T15:00:00.000Z" itemprop="datePublished">2017-03-10</time>
+        
+      
+    </div>
+
+
+      
+
+      
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="基于TCP的客户端程序"><a href="#基于TCP的客户端程序" class="headerlink" title="基于TCP的客户端程序"></a>基于TCP的客户端程序</h2><p>当一个基于TCP协议的客户端想要建立一个链接，但与链接目标之间有一个防火墙，则客户端必须打开一个TCP链接，链入SOCKS服务系统中合适的端口。该端口一般位于1080。如果连接成功，客户端将指定一个验证方法，然后发送一个轮询请求。服务器接到请求后，或建立，或拒绝。<br>除非额外指定，否则在数据包格式图中出现的十进制数(字节）表示相应字段的长度。给出的八位字节必须指定值，X’hh’ 用来表示该字段中的单个八位字节。当使用’Variable’ 时，表示相应的字段具有由相关联的（一个或两个八位字节）长度字段或由数据类型字段定义的可变长度。<br>客户端连接到服务器后，发送一条协商版本及方法的信息至服务器。</p>
+<pre><code>+-----+----------+----------+
+| VER | NMETHODS |  METHODS |
++-----+----------+----------+
+|  1  |     1    | 1 to 255 |
++-----+----------+----------+
+</code></pre>
+<ul>
+<li>VER：标识版本，X’05’为SOCKS5</li>
+<li>NMETHODS：包含METHODS字段中出现的指定方法的八进制数。</li>
+</ul>
+<p>服务器在客户端给出的METHODS中选择一个方法，并且将结果返回给客户端</p>
+<pre><code>+-----+---------+
+| VER |  METHOD |
++-----+---------+
+|  1  |    1    |
++-----+---------+
+</code></pre>
+<p>如果METHOD的值为X’FF’，则表示客户端给出的方法中没有一个被接收，此时客户端必须关闭链接。<br>METHOD 值定义：</p>
+<ul>
+<li>X’00’ 无需验证</li>
+<li>X’01’ GSSAPI</li>
+<li>X’02’ 用户/密码</li>
+<li>X’03’ ~ X’7F’  由IANA分配</li>
+<li>X’80’ ~ X’FE’ 私有方法储备</li>
+<li>X’FF’ 方法不合法<br>然后客户和服务器进入由选定认证方法所决定的子协商过程。各种不同的方法的子协商过程的描述请参考各自的备忘录。</li>
+</ul>
+<h3 id="请求"><a href="#请求" class="headerlink" title="请求"></a>请求</h3><p> 当子协商过程完成，客户端发送详细的请求数据。如果协商的方法中有以完整性检查和/或以安全性为目的的封装，则该请求必须按照以下方法所定义的格式进行封装。
+　</p>
+<pre><code>    +----+-----+-------+------+----------+----------+
+    |VER | CMD |  RSV  | ATYP | DST.ADDR | DST.PORT |
+    +----+-----+-------+------+----------+----------+
+    | 1  |  1  | X&#39;00&#39; |  1   | Variable |    2     |
+    +----+-----+-------+------+----------+----------+
+</code></pre>
+<ul>
+<li>VER: 协议版本 (X’05’:SOCKS5)</li>
+<li>CMD<ul>
+<li>CONNECT X’01’</li>
+<li>BIND X’02’</li>
+<li>UDP ASSOCIATE X’03’</li>
+</ul>
+</li>
+<li>RSV RESERVED(保留)</li>
+<li>ATYP 以下地址的类型<ul>
+<li>IP V4 地址：X’01’</li>
+<li>DOMAINNAME：X’03’</li>
+<li>IP V6 地址：X’04’</li>
+</ul>
+</li>
+<li>DST.ADDR 目的地址</li>
+<li>DST.PORT 以网络字节顺序出现的端口号</li>
+</ul>
+<p>服务器会对请求基于来源及目的地进行评估，然后根据请求类型给出一个或多个回复信息。</p>
+<h3 id="应答"><a href="#应答" class="headerlink" title="应答"></a>应答</h3><p>当对服务器的请求被确定，且认证协商完成时，客户端会立刻发送SOCKS请求信息。如果协商的方法中有以完整性检查和/或以安全性为目的的封装，则该请求必须按照以下方法所定义的格式进行封装：</p>
+<pre><code>    +----+-----+-------+------+----------+----------+
+    |VER | REP |  RSV  | ATYP | BND.ADDR | BND.PORT |
+    +----+-----+-------+------+----------+----------+
+    | 1  |  1  | X&#39;00&#39; |  1   | Variable |    2     |
+    +----+-----+-------+------+----------+----------+
+</code></pre>
+<ul>
+<li>VER 懒得讲了</li>
+<li>REP 回应字段<ul>
+<li>X’00’  成功</li>
+<li>X’01’  请求失败</li>
+<li>X’02’  请求规则不合法</li>
+<li>X’03’  网络无法连接</li>
+<li>X’04’  服务器无法连接</li>
+<li>X’05’  连接被拒绝</li>
+<li>X’06’  连接超时</li>
+<li>X’07’  命令不合法</li>
+<li>X’08’  地址类型不合法</li>
+<li>X’09’  ~ X’FF’  未注册的值</li>
+</ul>
+</li>
+<li>RSV 保留（必须设置为X’00’)</li>
+<li>ATYP (同上)</li>
+<li>BND.ADDR 服务器绑定地址</li>
+<li>BND.PORT  以网络字节顺序表示的服务器绑定的端口</li>
+</ul>
+<h3 id="ATYP详解"><a href="#ATYP详解" class="headerlink" title="ATYP详解"></a>ATYP详解</h3><h5 id="CONNECT"><a href="#CONNECT" class="headerlink" title="CONNECT"></a>CONNECT</h5><p>在对CONNECT的回复中，BND.PORT包含服务器分配的用于连接到目标主机的端口号，而BND.ADDR包含关联的IP地址。 BND.ADDR通常不同于客户端用于访问SOCKS服务器的IP地址，因为此类服务器通常是多宿主的。 SOCKS服务器将使用DST.ADDR和DST.PORT，以及客户端源地址和端口来评估CONNECT请求。</p>
+<h5 id="BIND"><a href="#BIND" class="headerlink" title="BIND"></a>BIND</h5><p>BIND请求用在需要客户端同意来自服务器的连接的协议中。 如FTP，它建立客户端到服务器连接来发送命令和状态报告，但也可能使用服务器到客户端的连接来按需传输数据（例如LS，GET，PUT）。</p>
+<p>应用协议的客户端将使用BIND请求，在使用CONNECT建立主连接之后建立次连接。SOCKS服务器将使用DST.ADDR和DST.PORT来评估BIND请求。</p>
+<p>在BIND操作期间，SOCKS服务器将发送给客户端两条回复。第一个是在服务器创建和绑定一个新的套接字后发送的。 BND.PORT字段包含SOCKS服务器分配的用于侦听传入连接的端口号。 BND.ADDR字段包含关联的IP地址。客户端通常将使用这些信息来通知（经由主连接或控制连接）应用服务器的会合地址。第二个回复仅在预期的传入连接成功或失败后发生。在第二个应答中，BND.PORT和BND.ADDR字段包含了连接主机的IP地址和端口号。</p>
+<h5 id="UDP-ASSOCIATE"><a href="#UDP-ASSOCIATE" class="headerlink" title="UDP ASSOCIATE"></a>UDP ASSOCIATE</h5><p>UDP ASSOCIATE请求用于在UDP中继过程中建立关联以处理UDP数据报。DST.ADDR和DST.PORT字段包含客户端期望用于发送UDP数据报的关联的地址和端口。 服务器可以使用此信息来限制对关联的访问。 如果客户端在UDP ASSOCIATE时不具有信息，则客户端必须使用全零的端口号和地址。</p>
+<p>当UDP ASSOCIATE请求到达的TCP连接终止时，UDP关联终止。</p>
+<p>在对UDP ASSOCIATE请求的答复中，BND.PORT和BND.ADDR字段指示客户端必须发送要请求中继的UDP请求消息的端口号/地址。</p>
+<h3 id="REP详解"><a href="#REP详解" class="headerlink" title="REP详解"></a>REP详解</h3><p>REP != X’00’：指示失败，SOCKS服务器必须在发送回复之后立即终止TCP连接，且必须在检测到导致故障后的10秒内。</p>
+<p>REP == X’00’：指示成功，并且请求是BIND或CONNECT，则客户端现在可以开始传递数据。 如果所选认证方法支持用于完整性，安全性 和/或 机密性的封装，则使用依赖于方法的封装来封装数据。 类似地，当数据到达用客户端的SOCKS服务器时，服务器必须封装适合于正在使用的认证方法的数据。</p>
+<h2 id="基于UDP的客户端程序"><a href="#基于UDP的客户端程序" class="headerlink" title="基于UDP的客户端程序"></a>基于UDP的客户端程序</h2><p>基于UDP的客户端必须在对UDP ASSOCIATE请求的回复中，通过BND.PORT指示的UDP端口将其数据报发送到UDP中继服务器。 如果选择的认证方法支持用于完整性，安全性 和/或 机密性的封装，则必须使用适当的封装来封装数据报。 每个UDP数据报都带有一个UDP请求头：</p>
+<pre><code>  +----+------+------+----------+----------+----------+
+  |RSV | FRAG | ATYP | DST.ADDR | DST.PORT |   DATA   |
+  +----+------+------+----------+----------+----------+
+  | 2  |  1   |  1   | Variable |    2     | Variable |
+  +----+------+------+----------+----------+----------+
+</code></pre>
+<ul>
+<li>RSV X‘0000’</li>
+<li>FRAG 当前分段号</li>
+<li>ATYP （同上）</li>
+<li>DST.ADDR</li>
+<li>DST.PORT</li>
+<li>DATA 用户信息</li>
+</ul>
+<p>当UDP中继服务器决定中继或丢弃UDP数据报时，它不会通知请求的客户端。当UDP中继服务器从远程主机接收到应答数据报时，它必须使用上述UDP请求报头或任何依赖于该认证的方法来封装。</p>
+<p>客户端将向UDP ASSOCIATE给出的BND.PORT发送数据报，而UDP中继服务器必须从SOCKS服务器获得该客户端的期望IP。</p>
+<blockquote>
+<p>The UDP relay server MUST acquire from the SOCKS server the expected<br>   IP address of the client that will send datagrams to the BND.PORT<br>   given in the reply to UDP ASSOCIATE. （？？？神特么英文长句…哪来的那么多定语啊…UDP中继服务器必须从SOCKS服务器获得将要向在UDP ASSOCIATE给出的BND.PORT发送数据报的客户端的期望IP地址？？？）</p>
+</blockquote>
+<p>它必须删除任何源IP地址，除了被记录用于特定关联的IP地址，的所有数据报。</p>
+<p>FRAG字段指示该数据报是否是多个片段中的一个。则高阶比特指示分段序列的序列，而值X’00’指示该序列是独立的。 1和127之间的值表示片段序列内的片段位置。每个接收器将具有与这些片段相关联的重组队列和重组定时器。重新装配队列必须重新初始化。当重组定时器超时或者新的数据报到达时携带FRAG字段，且其值小于为该片段序列处理的最高FRAG值，则丢弃相关片段。重组定时器必须不少于5秒。建议通过应用尽可能避免分段。</p>
+<p>分段的实现是可选的；不支持分段的实现必须删除FRAGfield不是X’00’的所以数据报。</p>
+<p>一个SOCKS的UDP编程接口必须报告UDP数据报的可用缓存空间是否小于操作系统提供的实际剩余空间：</p>
+<ul>
+<li>ATYP == X’01’ - 10+method_dependent octets smaller</li>
+<li>ATYP == X’03’ - 262+method_dependent octets smaller</li>
+<li>ATYP == X’04’ - 20+method_dependent octets smaller</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8ETCP%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%A8%8B%E5%BA%8F"><span class="toc-number">1.</span> <span class="toc-text">基于TCP的客户端程序</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AF%B7%E6%B1%82"><span class="toc-number">1.1.</span> <span class="toc-text">请求</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%BA%94%E7%AD%94"><span class="toc-number">1.2.</span> <span class="toc-text">应答</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#ATYP%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.3.</span> <span class="toc-text">ATYP详解</span></a><ol class="toc-child"><li class="toc-item toc-level-5"><a class="toc-link" href="#CONNECT"><span class="toc-number">1.3.0.1.</span> <span class="toc-text">CONNECT</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#BIND"><span class="toc-number">1.3.0.2.</span> <span class="toc-text">BIND</span></a></li><li class="toc-item toc-level-5"><a class="toc-link" href="#UDP-ASSOCIATE"><span class="toc-number">1.3.0.3.</span> <span class="toc-text">UDP ASSOCIATE</span></a></li></ol></li></ol></li><li class="toc-item toc-level-3"><a class="toc-link" href="#REP%E8%AF%A6%E8%A7%A3"><span class="toc-number">1.4.</span> <span class="toc-text">REP详解</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%9F%BA%E4%BA%8EUDP%E7%9A%84%E5%AE%A2%E6%88%B7%E7%AB%AF%E7%A8%8B%E5%BA%8F"><span class="toc-number">2.</span> <span class="toc-text">基于UDP的客户端程序</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aniao.space/2017/03/10/socks5/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aniao.space/2017/03/10/socks5/&text=socks5:一些笔记"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aniao.space/2017/03/10/socks5/&title=socks5:一些笔记"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aniao.space/2017/03/10/socks5/&is_video=false&description=socks5:一些笔记"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=socks5:一些笔记&body=Check out this article: http://aniao.space/2017/03/10/socks5/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aniao.space/2017/03/10/socks5/&title=socks5:一些笔记"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aniao.space/2017/03/10/socks5/&title=socks5:一些笔记"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aniao.space/2017/03/10/socks5/&title=socks5:一些笔记"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aniao.space/2017/03/10/socks5/&title=socks5:一些笔记"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aniao.space/2017/03/10/socks5/&name=socks5:一些笔记&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aniao.space/2017/03/10/socks5/&t=socks5:一些笔记"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    Aniao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

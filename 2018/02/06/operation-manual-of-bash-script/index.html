@@ -1,0 +1,446 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="以 #!&#x2F;bin&#x2F;bash为首行  参数外部传参test.sh  12#!&#x2F;bin&#x2F;bashcp $1 $2  $1 为第一个参数, $2 为第二个用法: bash test.sh test1.sh则$1被赋值为test.sh, $2被赋值为test1.sh 其他参数:  $0 - 脚本名zerotest.sh12#!&#x2F;bin&#x2F;bashecho $0 运行">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Bash脚本">
+<meta property="og:url" content="http://aniao.space/2018/02/06/operation-manual-of-bash-script/index.html">
+<meta property="og:site_name" content="Aniao&#39;s nest">
+<meta property="og:description" content="以 #!&#x2F;bin&#x2F;bash为首行  参数外部传参test.sh  12#!&#x2F;bin&#x2F;bashcp $1 $2  $1 为第一个参数, $2 为第二个用法: bash test.sh test1.sh则$1被赋值为test.sh, $2被赋值为test1.sh 其他参数:  $0 - 脚本名zerotest.sh12#!&#x2F;bin&#x2F;bashecho $0 运行">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2018-02-06T03:17:32.000Z">
+<meta property="article:modified_time" content="2021-04-30T13:12:25.724Z">
+<meta property="article:author" content="Aniao">
+<meta property="article:tag" content="Manual">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Bash脚本</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2018/11/21/http/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2018/02/01/blockchain/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aniao.space/2018/02/06/operation-manual-of-bash-script/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&text=Bash脚本"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&title=Bash脚本"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&is_video=false&description=Bash脚本"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Bash脚本&body=Check out this article: http://aniao.space/2018/02/06/operation-manual-of-bash-script/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&title=Bash脚本"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&title=Bash脚本"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&title=Bash脚本"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&title=Bash脚本"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&name=Bash脚本&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&t=Bash脚本"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E4%BC%A0%E5%8F%82"><span class="toc-number">1.1.</span> <span class="toc-text">外部传参</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.</span> <span class="toc-text">内部定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E8%84%9A%E6%9C%AC%E9%97%B4%E4%BC%A0%E5%8F%82"><span class="toc-number">1.3.</span> <span class="toc-text">不同脚本间传参</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E4%B8%AD%E8%BE%93%E5%85%A5%E5%8F%82%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">运行中输入参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E7%9B%B8%E5%85%B3"><span class="toc-number">2.</span> <span class="toc-text">计算相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#let"><span class="toc-number">2.1.</span> <span class="toc-text">let</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#expr"><span class="toc-number">2.2.</span> <span class="toc-text">expr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E8%AF%AD%E5%8F%A5"><span class="toc-number">2.3.</span> <span class="toc-text">$((计算语句))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%95%E5%8F%B7var"><span class="toc-number">2.4.</span> <span class="toc-text">${井号var}</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#if"><span class="toc-number">3.1.</span> <span class="toc-text">if</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#switch"><span class="toc-number">3.2.</span> <span class="toc-text">switch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#while"><span class="toc-number">3.3.</span> <span class="toc-text">while</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#until"><span class="toc-number">3.4.</span> <span class="toc-text">until</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#for"><span class="toc-number">3.5.</span> <span class="toc-text">for</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#range"><span class="toc-number">3.6.</span> <span class="toc-text">range</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#select"><span class="toc-number">3.7.</span> <span class="toc-text">select</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%89%8D%E7%BC%80-%E6%AF%94%E8%BE%83%E7%AC%A6"><span class="toc-number">3.8.</span> <span class="toc-text">常用前缀&#x2F;比较符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">3.9.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-number">3.10.</span> <span class="toc-text">作用域</span></a></li></ol></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Bash脚本
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Aniao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2018-02-06T03:17:32.000Z" itemprop="datePublished">2018-02-06</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Manual/" rel="tag">Manual</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <ul>
+<li>以 <code>#!/bin/bash</code>为首行</li>
+</ul>
+<h2 id="参数"><a href="#参数" class="headerlink" title="参数"></a>参数</h2><h3 id="外部传参"><a href="#外部传参" class="headerlink" title="外部传参"></a>外部传参</h3><p>test.sh </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">cp $1 $2</span><br></pre></td></tr></table></figure>
+
+<p>$1 为第一个参数, $2 为第二个<br>用法: <code>bash test.sh test1.sh</code><br>则$1被赋值为test.sh, $2被赋值为test1.sh</p>
+<p>其他参数:</p>
+<ul>
+<li>$0 - 脚本名<br>zerotest.sh<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">echo $0</span><br></pre></td></tr></table></figure>
+运行<code>bash zerotest.sh</code></li>
+</ul>
+<p>结果: </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">zerotest.sh</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>$1 - $9 - 同上所述</li>
+<li>$# - 传入的参数个数</li>
+<li>$@ - 传入的所有参数</li>
+<li>$? - The exit status of the most recently run process.</li>
+<li>$$ - The process ID of the current script.</li>
+<li>$USER - The username of the user running the script.</li>
+<li>$HOSTNAME - The hostname of the machine the script is running on.</li>
+<li>$SECONDS - The number of seconds since the script was started.</li>
+<li>$RANDOM - Returns a different random number each time is it referred to.</li>
+<li>$LINENO - Returns the current line number in the Bash script.</li>
+</ul>
+<h3 id="内部定义"><a href="#内部定义" class="headerlink" title="内部定义"></a>内部定义</h3><p>In:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">var&#x3D;Hello</span><br><span class="line">varone&#x3D;&#39;Hello World&#39;</span><br><span class="line">vartwo&#x3D;&quot;More $myvar&quot;</span><br><span class="line">varthree&#x3D;&#39;More $myvar&#39;</span><br><span class="line">varfour&#x3D;Hello World</span><br><span class="line"></span><br><span class="line">echo $var</span><br><span class="line">echo $varone</span><br><span class="line">echo $vartwo</span><br><span class="line">echo $varthree</span><br></pre></td></tr></table></figure>
+<p>Out:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">Hello</span><br><span class="line">Hello World</span><br><span class="line">More Hello World</span><br><span class="line">More $myvar</span><br><span class="line"># 会报错, 因为包含空格</span><br><span class="line">-bash: World: command not found</span><br></pre></td></tr></table></figure>
+
+<ul>
+<li>还可以用一个执行块的返回结果作为参数的值<br>In:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">myvar&#x3D;$( ls &#x2F;etc | wc -l )</span><br><span class="line">echo the value of myvar: $myvar</span><br></pre></td></tr></table></figure>
+Out:<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">the value of myvar: 87</span><br></pre></td></tr></table></figure></li>
+</ul>
+<h3 id="不同脚本间传参"><a href="#不同脚本间传参" class="headerlink" title="不同脚本间传参"></a>不同脚本间传参</h3><p>In:<br>script0.sh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">var1&#x3D;blah</span><br><span class="line">var2&#x3D;foo</span><br><span class="line">echo $0 : var1 -&gt; $var1, var2 -&gt; $var2</span><br><span class="line">export var1</span><br><span class="line">.&#x2F;script1.sh</span><br><span class="line">echo $0 : var1 -&gt; $var1, var2 -&gt; $var2</span><br></pre></td></tr></table></figure>
+<p>script1.sh</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">echo $0 :: var1 : $var1, var2 : $var2</span><br><span class="line">var1&#x3D;flop</span><br><span class="line">var2&#x3D;bleh</span><br></pre></td></tr></table></figure>
+
+<p>Out:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">script0.sh :: var1 : blah, var2 : foo</span><br><span class="line">script1.sh :: var1 : blah, var2 :</span><br><span class="line">script0.sh :: var1 : blah, var2 : foo</span><br></pre></td></tr></table></figure>
+
+<h3 id="运行中输入参数"><a href="#运行中输入参数" class="headerlink" title="运行中输入参数"></a>运行中输入参数</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">read name </span><br><span class="line">read name age birthday # 可以一行内读取多个参数</span><br><span class="line">read -p &#39;Username:&#39; uservar # 带提示语</span><br><span class="line">read -sp &#39;Password:&#39; passvar # 密码(输入时不显示任何字符)</span><br></pre></td></tr></table></figure>
+
+<h2 id="计算相关"><a href="#计算相关" class="headerlink" title="计算相关"></a>计算相关</h2><h3 id="let"><a href="#let" class="headerlink" title="let"></a>let</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">let a&#x3D;5+4</span><br><span class="line">echo $a # 9</span><br><span class="line">let &quot;a &#x3D; 5 + 4&quot;</span><br><span class="line">echo $a # 9</span><br><span class="line">let a++</span><br><span class="line">echo $a # 10</span><br><span class="line">let &quot;a &#x3D; 4 * 5&quot;</span><br><span class="line">echo $a # 20</span><br><span class="line">let &quot;a &#x3D; $1 + 30&quot;</span><br><span class="line">echo $a # 30 + first command line argument</span><br></pre></td></tr></table></figure>
+
+<h3 id="expr"><a href="#expr" class="headerlink" title="expr"></a>expr</h3><p>逻辑上差不多可以等同于 echo let, 注意格式</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">expr 5 + 4 # 9</span><br><span class="line">expr &quot;5 + 4&quot; # &quot;5 + 4&quot;</span><br><span class="line">expr 5+4 # 5+4</span><br><span class="line">expr 5 \* $1 # 必须用\*表示乘</span><br><span class="line">expr 11 % 2 # mod</span><br><span class="line">a&#x3D;$( expr 10 - 3 )</span><br><span class="line">echo $a # 7</span><br></pre></td></tr></table></figure>
+
+<h3 id="计算语句"><a href="#计算语句" class="headerlink" title="$((计算语句))"></a>$((计算语句))</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">a&#x3D;$((3+5)) # 无格式要求</span><br><span class="line">echo $a # 8</span><br></pre></td></tr></table></figure>
+
+<h3 id="井号var"><a href="#井号var" class="headerlink" title="${井号var}"></a>${井号var}</h3><p>输出var的长度(换成’#’markdown居然无法解析….)</p>
+<h2 id="语法"><a href="#语法" class="headerlink" title="语法"></a>语法</h2><p>通过缩进确定码块作用域</p>
+<h3 id="if"><a href="#if" class="headerlink" title="if"></a>if</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">if [ &lt;some test&gt; ]</span><br><span class="line">then</span><br><span class="line">	&lt;commands&gt;</span><br><span class="line">	# 可用break&#x2F;continue</span><br><span class="line">elif [ &lt;some test&gt; ] </span><br><span class="line">then</span><br><span class="line">	&lt;different commands&gt;</span><br><span class="line">else</span><br><span class="line">	&lt;other commands&gt;</span><br><span class="line">fi</span><br></pre></td></tr></table></figure>
+
+<h3 id="switch"><a href="#switch" class="headerlink" title="switch"></a>switch</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br></pre></td><td class="code"><pre><span class="line">case &lt;variable&gt; in</span><br><span class="line">	&lt;pattern 1&gt;)</span><br><span class="line">		&lt;commands&gt;</span><br><span class="line">		;;</span><br><span class="line">	&lt;pattern 2&gt;)</span><br><span class="line">		&lt;other commands&gt;</span><br><span class="line">		;;</span><br><span class="line">	*)</span><br><span class="line">		;; # default</span><br><span class="line">esac</span><br></pre></td></tr></table></figure>
+
+<h3 id="while"><a href="#while" class="headerlink" title="while"></a>while</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">while [ &lt;some test&gt; ]</span><br><span class="line">do</span><br><span class="line">	&lt;commands&gt;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<h3 id="until"><a href="#until" class="headerlink" title="until"></a>until</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">until [ &lt;some test&gt; ]</span><br><span class="line">do</span><br><span class="line">	&lt;commands&gt;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+
+<p>while 和 until 的区别类似Java中的 while do 和 do while</p>
+<h3 id="for"><a href="#for" class="headerlink" title="for"></a>for</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br></pre></td><td class="code"><pre><span class="line">for var in &lt;list&gt;</span><br><span class="line">do</span><br><span class="line">	&lt;commands&gt;</span><br><span class="line">done</span><br></pre></td></tr></table></figure>
+<p>遍历文件夹下的所有文件: <code>for i in $path/*; do</code></p>
+<h3 id="range"><a href="#range" class="headerlink" title="range"></a>range</h3><p>In:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">echo &#123;1..5&#125;</span><br><span class="line">echo &#123;10..0..2&#125; # 隔2输出</span><br></pre></td></tr></table></figure>
+
+<p>Out:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">1 2 3 4 5</span><br><span class="line">10 8 6 4 2 0</span><br></pre></td></tr></table></figure>
+
+<h3 id="select"><a href="#select" class="headerlink" title="select"></a>select</h3><p>In:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">select_example.sh</span><br><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line">names&#x3D;&#39;Kyle Cartman Stan Quit&#39;</span><br><span class="line">PS3&#x3D;&#39;Select character: &#39;</span><br><span class="line">select name in $names</span><br><span class="line">	do</span><br><span class="line">		if [ $name &#x3D;&#x3D; &#39;Quit&#39; ]</span><br><span class="line">		then</span><br><span class="line">			break</span><br><span class="line">		fi</span><br><span class="line">	echo Hello $name</span><br><span class="line">done</span><br><span class="line"></span><br><span class="line">echo Bye</span><br></pre></td></tr></table></figure>
+
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br></pre></td><td class="code"><pre><span class="line">1) Kyle     3) Stan</span><br><span class="line">2) Cartman  4) Quit</span><br><span class="line">Select character: 2</span><br><span class="line">Hello Cartman</span><br><span class="line">Select Character: 1</span><br><span class="line">Hello Kyle</span><br><span class="line">Select character: 4</span><br><span class="line">Bye</span><br></pre></td></tr></table></figure>
+<h3 id="常用前缀-比较符"><a href="#常用前缀-比较符" class="headerlink" title="常用前缀/比较符"></a>常用前缀/比较符</h3><table>
+<thead>
+<tr>
+<th>Operator</th>
+<th>Description</th>
+</tr>
+</thead>
+<tbody><tr>
+<td>! EXPRESSION</td>
+<td>The EXPRESSION is false.</td>
+</tr>
+<tr>
+<td>-n STRING</td>
+<td>The length of STRING is greater than zero.</td>
+</tr>
+<tr>
+<td>-z STRING</td>
+<td>The lengh of STRING is zero (ie it is empty).</td>
+</tr>
+<tr>
+<td>STRING1 = STRING2</td>
+<td>STRING1 is equal to STRING2</td>
+</tr>
+<tr>
+<td>STRING1 != STRING2</td>
+<td>STRING1 is not equal to STRING2</td>
+</tr>
+<tr>
+<td>INTEGER1 -eq INTEGER2</td>
+<td>INTEGER1 is numerically equal to INTEGER2</td>
+</tr>
+<tr>
+<td>INTEGER1 -gt INTEGER2</td>
+<td>INTEGER1 is numerically greater than INTEGER2</td>
+</tr>
+<tr>
+<td>INTEGER1 -lt INTEGER2</td>
+<td>INTEGER1 is numerically less than INTEGER2</td>
+</tr>
+<tr>
+<td>-d FILE</td>
+<td>FILE exists and is a directory.</td>
+</tr>
+<tr>
+<td>-e FILE</td>
+<td>FILE exists.</td>
+</tr>
+<tr>
+<td>-r FILE</td>
+<td>FILE exists and the read permission is granted.</td>
+</tr>
+<tr>
+<td>-s FILE</td>
+<td>FILE exists and it’s size is greater than zero (ie. it is not empty).</td>
+</tr>
+<tr>
+<td>-w FILE</td>
+<td>FILE exists and the write permission is granted.</td>
+</tr>
+<tr>
+<td>-x FILE</td>
+<td>FILE exists and the execute permission is granted.</td>
+</tr>
+</tbody></table>
+<p>note: 001 = 1 -&gt; false; 001 -eq 1 -&gt; ture</p>
+<h3 id="函数"><a href="#函数" class="headerlink" title="函数"></a>函数</h3><ul>
+<li><p>函数必须定义在调用之前</p>
+</li>
+<li><p>两种定义方式:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br></pre></td><td class="code"><pre><span class="line">function_name () &#123;</span><br><span class="line">	&lt;commands&gt;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function function_name&#123;</span><br><span class="line">	&lt;commands&gt;</span><br><span class="line">&#125;</span><br></pre></td></tr></table></figure></li>
+<li><p>如果需要传递参数, 直接:<br>In:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br></pre></td><td class="code"><pre><span class="line">funcion_arvg&#123;</span><br><span class="line">	echo $1</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function_arvg Hello</span><br></pre></td></tr></table></figure>
+<p>Out:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">Hello</span><br></pre></td></tr></table></figure></li>
+<li><p>如果需要有返回值:<br>In:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br></pre></td><td class="code"><pre><span class="line">function_return&#123;</span><br><span class="line">	return 5</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">function_return</span><br><span class="line">echo The funcion\&#39;s return value is $?</span><br></pre></td></tr></table></figure></li>
+</ul>
+<p>Out:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">The funcion&#39;s return value is 5</span><br></pre></td></tr></table></figure>
+<p>函数未出现错误时默认返回值为0</p>
+<h3 id="作用域"><a href="#作用域" class="headerlink" title="作用域"></a>作用域</h3><p>In:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br></pre></td><td class="code"><pre><span class="line">#!&#x2F;bin&#x2F;bash</span><br><span class="line"># Experimenting with variable scope</span><br><span class="line">var_change () &#123;</span><br><span class="line">	local var1&#x3D;&#39;local 1&#39;</span><br><span class="line">	echo Inside function: var1 is $var1 : var2 is $var2</span><br><span class="line">	var1&#x3D;&#39;changed again&#39;</span><br><span class="line">	var2&#x3D;&#39;2 changed again&#39;</span><br><span class="line">&#125;</span><br><span class="line"></span><br><span class="line">var1&#x3D;&#39;global 1&#39;</span><br><span class="line">var2&#x3D;&#39;global 2&#39;</span><br><span class="line"></span><br><span class="line">echo Before function call: var1 is $var1 : var2 is $var2</span><br><span class="line">var_change</span><br><span class="line">echo After function call: var1 is $var1 : var2 is $var2</span><br></pre></td></tr></table></figure>
+
+<p>Out:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br></pre></td><td class="code"><pre><span class="line">Before function call: var1 is global 1 : var2 is global 2</span><br><span class="line">Inside function: var1 is local 1 : var2 is global 2</span><br><span class="line">After function call: var1 is global 1 : var2 is 2 changed again</span><br></pre></td></tr></table></figure>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%8F%82%E6%95%B0"><span class="toc-number">1.</span> <span class="toc-text">参数</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%A4%96%E9%83%A8%E4%BC%A0%E5%8F%82"><span class="toc-number">1.1.</span> <span class="toc-text">外部传参</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%86%85%E9%83%A8%E5%AE%9A%E4%B9%89"><span class="toc-number">1.2.</span> <span class="toc-text">内部定义</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%8D%E5%90%8C%E8%84%9A%E6%9C%AC%E9%97%B4%E4%BC%A0%E5%8F%82"><span class="toc-number">1.3.</span> <span class="toc-text">不同脚本间传参</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%90%E8%A1%8C%E4%B8%AD%E8%BE%93%E5%85%A5%E5%8F%82%E6%95%B0"><span class="toc-number">1.4.</span> <span class="toc-text">运行中输入参数</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E7%9B%B8%E5%85%B3"><span class="toc-number">2.</span> <span class="toc-text">计算相关</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#let"><span class="toc-number">2.1.</span> <span class="toc-text">let</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#expr"><span class="toc-number">2.2.</span> <span class="toc-text">expr</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%AE%A1%E7%AE%97%E8%AF%AD%E5%8F%A5"><span class="toc-number">2.3.</span> <span class="toc-text">$((计算语句))</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BA%95%E5%8F%B7var"><span class="toc-number">2.4.</span> <span class="toc-text">${井号var}</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E8%AF%AD%E6%B3%95"><span class="toc-number">3.</span> <span class="toc-text">语法</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#if"><span class="toc-number">3.1.</span> <span class="toc-text">if</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#switch"><span class="toc-number">3.2.</span> <span class="toc-text">switch</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#while"><span class="toc-number">3.3.</span> <span class="toc-text">while</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#until"><span class="toc-number">3.4.</span> <span class="toc-text">until</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#for"><span class="toc-number">3.5.</span> <span class="toc-text">for</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#range"><span class="toc-number">3.6.</span> <span class="toc-text">range</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#select"><span class="toc-number">3.7.</span> <span class="toc-text">select</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%B8%B8%E7%94%A8%E5%89%8D%E7%BC%80-%E6%AF%94%E8%BE%83%E7%AC%A6"><span class="toc-number">3.8.</span> <span class="toc-text">常用前缀&#x2F;比较符</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%87%BD%E6%95%B0"><span class="toc-number">3.9.</span> <span class="toc-text">函数</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%BD%9C%E7%94%A8%E5%9F%9F"><span class="toc-number">3.10.</span> <span class="toc-text">作用域</span></a></li></ol></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aniao.space/2018/02/06/operation-manual-of-bash-script/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&text=Bash脚本"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&title=Bash脚本"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&is_video=false&description=Bash脚本"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Bash脚本&body=Check out this article: http://aniao.space/2018/02/06/operation-manual-of-bash-script/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&title=Bash脚本"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&title=Bash脚本"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&title=Bash脚本"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&title=Bash脚本"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&name=Bash脚本&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aniao.space/2018/02/06/operation-manual-of-bash-script/&t=Bash脚本"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    Aniao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

@@ -1,0 +1,321 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="同步进程 进程与线程基本区别: 进程内的数据不同线程可共享，不同进程数据除非通信不可共享。  共享： 共享非实时的，创建线程时会把所需数据重新拷贝一份使用，计算完成后的数据写回具有随机性，以减少数据不断跨线程读取耗费的时间。 所以当不同线程同时操作同一个数据时应考虑线程同步。  进程与CPU单核CPU：操作系统划分时间片进行多进程操作多核CPU：每个核可独立运行一个进程   Callable -&amp;">
+<meta property="og:type" content="article">
+<meta property="og:title" content="Java 线程同步及通信">
+<meta property="og:url" content="http://aniao.space/2019/11/22/multi-thread/index.html">
+<meta property="og:site_name" content="Aniao&#39;s nest">
+<meta property="og:description" content="同步进程 进程与线程基本区别: 进程内的数据不同线程可共享，不同进程数据除非通信不可共享。  共享： 共享非实时的，创建线程时会把所需数据重新拷贝一份使用，计算完成后的数据写回具有随机性，以减少数据不断跨线程读取耗费的时间。 所以当不同线程同时操作同一个数据时应考虑线程同步。  进程与CPU单核CPU：操作系统划分时间片进行多进程操作多核CPU：每个核可独立运行一个进程   Callable -&amp;">
+<meta property="og:locale" content="zh_CN">
+<meta property="article:published_time" content="2019-11-22T12:56:21.000Z">
+<meta property="article:modified_time" content="2021-05-05T08:39:28.164Z">
+<meta property="article:author" content="Aniao">
+<meta property="article:tag" content="Java">
+<meta name="twitter:card" content="summary">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>Java 线程同步及通信</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2019/12/15/android-thread/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2019/10/15/Annotation-Processing/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aniao.space/2019/11/22/multi-thread/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aniao.space/2019/11/22/multi-thread/&text=Java 线程同步及通信"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aniao.space/2019/11/22/multi-thread/&title=Java 线程同步及通信"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aniao.space/2019/11/22/multi-thread/&is_video=false&description=Java 线程同步及通信"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java 线程同步及通信&body=Check out this article: http://aniao.space/2019/11/22/multi-thread/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aniao.space/2019/11/22/multi-thread/&title=Java 线程同步及通信"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aniao.space/2019/11/22/multi-thread/&title=Java 线程同步及通信"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aniao.space/2019/11/22/multi-thread/&title=Java 线程同步及通信"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aniao.space/2019/11/22/multi-thread/&title=Java 线程同步及通信"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aniao.space/2019/11/22/multi-thread/&name=Java 线程同步及通信&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aniao.space/2019/11/22/multi-thread/&t=Java 线程同步及通信"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5"><span class="toc-number">1.</span> <span class="toc-text">同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Callable-gt-%E6%9C%89%E8%BF%94%E5%9B%9E%E5%80%BC%E7%9A%84Runnable"><span class="toc-number">1.2.</span> <span class="toc-text">Callable -&gt; 有返回值的Runnable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="toc-number">1.3.</span> <span class="toc-text">线程池</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%EF%BC%9A"><span class="toc-number">1.4.</span> <span class="toc-text">线程同步：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E8%BE%83%E5%AE%8C%E5%A4%87%E7%9A%84%E5%8D%95%E4%BE%8B%EF%BC%9A"><span class="toc-number">1.5.</span> <span class="toc-text">一个较完备的单例：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1"><span class="toc-number">2.</span> <span class="toc-text">通信</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        Java 线程同步及通信
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Aniao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2019-11-22T12:56:21.000Z" itemprop="datePublished">2019-11-22</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/Java/" rel="tag">Java</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <h2 id="同步"><a href="#同步" class="headerlink" title="同步"></a>同步</h2><h3 id="进程"><a href="#进程" class="headerlink" title="进程"></a>进程</h3><ul>
+<li><p>进程与线程基本区别: 进程内的数据不同线程可共享，不同进程数据除非通信不可共享。</p>
+</li>
+<li><p>共享： 共享非实时的，创建线程时会把所需数据重新拷贝一份使用，计算完成后的数据写回具有随机性，以减少数据不断跨线程读取耗费的时间。 所以当不同线程同时操作同一个数据时应考虑线程同步。</p>
+</li>
+<li><p>进程与CPU<br>单核CPU：操作系统划分时间片进行多进程操作<br>多核CPU：每个核可独立运行一个进程</p>
+</li>
+</ul>
+<h3 id="Callable-gt-有返回值的Runnable"><a href="#Callable-gt-有返回值的Runnable" class="headerlink" title="Callable -&gt; 有返回值的Runnable"></a>Callable -&gt; 有返回值的Runnable</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br></pre></td><td class="code"><pre><span class="line">Future &#x3D; ExecutorService.submit(Callable)</span><br><span class="line">Future.get() &#x2F;&#x2F; 阻塞式</span><br></pre></td></tr></table></figure>
+
+<h3 id="线程池"><a href="#线程池" class="headerlink" title="线程池"></a>线程池</h3><p>线程池优点：</p>
+<ul>
+<li>方便统一管理，如对线程命名</li>
+<li>线程的创建及销毁需耗费资源，使用线程池可方便重用</li>
+</ul>
+<h3 id="线程同步："><a href="#线程同步：" class="headerlink" title="线程同步："></a>线程同步：</h3><ul>
+<li>volatile: 强制打开同步，线程读取时总从原数据中读取，写入时即刻更新。</li>
+<li>synchronized: 将代码块封装成原子操作，提供互斥访问，其中的数据无法被其他线程修改<ul>
+<li>monitor: 使用同一个 monitor 的不同 synchronized 代码块共享同样的互斥条件。 如 synchronized A() 和 synchronized B() 使用同一个 monitor 时，当 A() 被调用时，B() 也不可访问。</li>
+</ul>
+</li>
+<li>lock: 将锁分为读锁/写锁，可更精确的对数据读写进行操作，比如可开放多个线程同时读数据的权限。</li>
+<li>Atomic： Java中对部分数据类型封装的类，如 <code>AtomicInt</code> ，将非原子操作的 <code>int++</code> 封装成原子操作的 <code>AtomicInt.getAndIncrement()</code></li>
+</ul>
+<h3 id="一个较完备的单例："><a href="#一个较完备的单例：" class="headerlink" title="一个较完备的单例："></a>一个较完备的单例：</h3><figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br></pre></td><td class="code"><pre><span class="line">class SingleMan &#123;</span><br><span class="line">  private static volatile SingleMan sInstance; &#x2F;&#x2F; 此处的 volatile 确保对象完全初始化成功后才可用</span><br><span class="line"></span><br><span class="line">  private SingleMan() &#123;</span><br><span class="line">  &#125;</span><br><span class="line"></span><br><span class="line">  static SingleMan newInstance() &#123;</span><br><span class="line">    if (sInstance &#x3D;&#x3D; null) &#123; </span><br><span class="line">      synchronized (SingleMan.class) &#123; &#x2F;&#x2F; 此处的 synchronized 确保只有一个线程进行初始化操作</span><br><span class="line">        if (sInstance &#x3D;&#x3D; null) &#123;</span><br><span class="line">          sInstance &#x3D; new SingleMan();</span><br><span class="line">        &#125;</span><br><span class="line">      &#125;</span><br><span class="line">    &#125;</span><br><span class="line">    return sInstance;</span><br><span class="line">  &#125;</span><br><span class="line">&#125;</span><br><span class="line"></span><br></pre></td></tr></table></figure>
+
+<h2 id="通信"><a href="#通信" class="headerlink" title="通信"></a>通信</h2><ul>
+<li>thread.stop()<br><code>deprecated</code> 立即停止线程, 停止位置不可控，可能造成线程任务处于中间状态导致程序错误</li>
+<li>thread.interrupt()<br>通知线程中止，非强制性，线程通过 <code>isInterrupted()</code> 获得通知以通过可控的方式中止操作。<br>如果此时线程处于<code>sleep</code>状态，会抛出 <code>InterruptedException</code> 。</li>
+<li>monitor.wait()/monitor.notify()/monitor.notifyAll()<ul>
+<li>等待区/排队区的对象指同一个monitor进行监听的线程</li>
+</ul>
+–&gt; monitor.wait() // 线程进入等待区，不与其他线程争夺锁<br>–&gt; monitor.notify() // 在等待区中随机抽取一个线程进入排队区<br>  –&gt; monitor.notifyAll() // 将等待区中所有线程都放入排队区<br>–&gt; 进入排队区的原等待线程执行优先级与其他排队区线程一致 <figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br><span class="line">15</span><br><span class="line">16</span><br><span class="line">17</span><br><span class="line">18</span><br><span class="line">19</span><br><span class="line">20</span><br></pre></td><td class="code"><pre><span class="line">┌─────────────────────┐</span><br><span class="line">│   waiting           │</span><br><span class="line">│                     ├────────┐</span><br><span class="line">│  ┌───────────────┐  │        │</span><br><span class="line">│  │thread.notify()│  │        │</span><br><span class="line">│  ├───────────────┼  │        │</span><br><span class="line">└──────────┼──────────┘        │</span><br><span class="line">           │                   │</span><br><span class="line">┌──────────▼──────────┐        │</span><br><span class="line">│   queuing           │        │</span><br><span class="line">│                     │        │</span><br><span class="line">│          │          │        │</span><br><span class="line">└──────────┼──────────┘        │</span><br><span class="line">           │                   │</span><br><span class="line">┌──────────▼──────────┐        │</span><br><span class="line">│   running           │        │</span><br><span class="line">│   ┌─────────────┐   │        │</span><br><span class="line">│   │thread.wait()├───┼────────┘</span><br><span class="line">│   └─────────────┘   │</span><br><span class="line">└─────────────────────┘</span><br></pre></td></tr></table></figure></li>
+<li>thread.join()<br>执行该thread完毕后才执行后续代码，如：<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br><span class="line">2</span><br><span class="line">3</span><br><span class="line">4</span><br><span class="line">5</span><br><span class="line">6</span><br><span class="line">7</span><br><span class="line">8</span><br><span class="line">9</span><br><span class="line">10</span><br><span class="line">11</span><br><span class="line">12</span><br><span class="line">13</span><br><span class="line">14</span><br></pre></td><td class="code"><pre><span class="line">thread1 &#x3D; &#123; </span><br><span class="line">  sleep(3000)</span><br><span class="line">  print(&quot;thread1 ended&quot;)</span><br><span class="line">&#125;</span><br><span class="line">thread1.start()</span><br><span class="line">thread2 &#x3D; &#123;</span><br><span class="line">  thread1.join() </span><br><span class="line">  print(&quot;thread2 ended&quot;) &#x2F;&#x2F; 会在thread1执行完后才调用</span><br><span class="line">&#125;</span><br><span class="line">thread1.start()</span><br><span class="line">&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;&#x3D;</span><br><span class="line">输出结果：</span><br><span class="line">thread1 ended</span><br><span class="line">thread2 ended</span><br></pre></td></tr></table></figure></li>
+<li>thread.yield()<br>让出时间片给其他相同优先级的线程，但在当前线程执行完后立即获取时间片</li>
+</ul>
+
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-2"><a class="toc-link" href="#%E5%90%8C%E6%AD%A5"><span class="toc-number">1.</span> <span class="toc-text">同步</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E8%BF%9B%E7%A8%8B"><span class="toc-number">1.1.</span> <span class="toc-text">进程</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#Callable-gt-%E6%9C%89%E8%BF%94%E5%9B%9E%E5%80%BC%E7%9A%84Runnable"><span class="toc-number">1.2.</span> <span class="toc-text">Callable -&gt; 有返回值的Runnable</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E6%B1%A0"><span class="toc-number">1.3.</span> <span class="toc-text">线程池</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E7%BA%BF%E7%A8%8B%E5%90%8C%E6%AD%A5%EF%BC%9A"><span class="toc-number">1.4.</span> <span class="toc-text">线程同步：</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E4%B8%80%E4%B8%AA%E8%BE%83%E5%AE%8C%E5%A4%87%E7%9A%84%E5%8D%95%E4%BE%8B%EF%BC%9A"><span class="toc-number">1.5.</span> <span class="toc-text">一个较完备的单例：</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#%E9%80%9A%E4%BF%A1"><span class="toc-number">2.</span> <span class="toc-text">通信</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aniao.space/2019/11/22/multi-thread/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aniao.space/2019/11/22/multi-thread/&text=Java 线程同步及通信"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aniao.space/2019/11/22/multi-thread/&title=Java 线程同步及通信"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aniao.space/2019/11/22/multi-thread/&is_video=false&description=Java 线程同步及通信"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=Java 线程同步及通信&body=Check out this article: http://aniao.space/2019/11/22/multi-thread/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aniao.space/2019/11/22/multi-thread/&title=Java 线程同步及通信"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aniao.space/2019/11/22/multi-thread/&title=Java 线程同步及通信"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aniao.space/2019/11/22/multi-thread/&title=Java 线程同步及通信"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aniao.space/2019/11/22/multi-thread/&title=Java 线程同步及通信"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aniao.space/2019/11/22/multi-thread/&name=Java 线程同步及通信&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aniao.space/2019/11/22/multi-thread/&t=Java 线程同步及通信"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    Aniao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>

@@ -1,0 +1,363 @@
+<!DOCTYPE html>
+<html lang=zh>
+<head>
+    <!-- so meta -->
+    <meta charset="utf-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="HandheldFriendly" content="True">
+    <meta name="viewport" content="width=device-width, initial-scale=1, maximum-scale=5" />
+    <meta name="description" content="A accuracy 精度 activation function 激活函数   B Bayesian 贝叶斯   C cross-entropy 交叉熵   D E F G H hidden layer 隐含层   I J K L logistic regression 逻辑回归模型   M N neuron 神经元   O overfitting 过拟合   P Q R ridge re">
+<meta property="og:type" content="article">
+<meta property="og:title" content="ML 术语">
+<meta property="og:url" content="http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/index.html">
+<meta property="og:site_name" content="Aniao&#39;s nest">
+<meta property="og:description" content="A accuracy 精度 activation function 激活函数   B Bayesian 贝叶斯   C cross-entropy 交叉熵   D E F G H hidden layer 隐含层   I J K L logistic regression 逻辑回归模型   M N neuron 神经元   O overfitting 过拟合   P Q R ridge re">
+<meta property="og:locale" content="zh_CN">
+<meta property="og:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/46c32a5089726d673c30a0abfda7b35ecf0fe3ca">
+<meta property="article:published_time" content="2018-01-02T03:38:29.000Z">
+<meta property="article:modified_time" content="2021-04-30T13:12:25.713Z">
+<meta property="article:author" content="Aniao">
+<meta property="article:tag" content="ML">
+<meta name="twitter:card" content="summary">
+<meta name="twitter:image" content="https://wikimedia.org/api/rest_v1/media/math/render/svg/46c32a5089726d673c30a0abfda7b35ecf0fe3ca">
+    
+    
+      
+        
+          <link rel="shortcut icon" href="/images/favicon.ico">
+        
+      
+      
+        
+          <link rel="icon" type="image/png" href="/images/favicon-192x192.png" sizes="192x192">
+        
+      
+      
+        
+          <link rel="apple-touch-icon" sizes="180x180" href="/images/apple-touch-icon.png">
+        
+      
+    
+    <!-- title -->
+    <title>ML 术语</title>
+    <!-- styles -->
+    
+<link rel="stylesheet" href="/css/style.css">
+
+    <!-- persian styles -->
+    
+    <!-- rss -->
+    
+    
+	<!-- mathjax -->
+	
+<meta name="generator" content="Hexo 5.4.0"></head>
+
+<body class="max-width mx-auto px3 ltr">
+    
+      <div id="header-post">
+  <a id="menu-icon" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="menu-icon-tablet" href="#" aria-label="Menu"><i class="fas fa-bars fa-lg"></i></a>
+  <a id="top-icon-tablet" href="#" "Top" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');" style="display:none;"><i class="fas fa-chevron-up fa-lg"></i></a>
+  <span id="menu">
+    <span id="nav">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+        
+      </ul>
+    </span>
+    <br/>
+    <span id="actions">
+      <ul>
+        
+        <li><a class="icon" aria-label="上一篇 " href="/2018/02/01/excerpt-2018-2/"><i class="fas fa-chevron-left" aria-hidden="true" onmouseover="$('#i-prev').toggle();" onmouseout="$('#i-prev').toggle();"></i></a></li>
+        
+        
+        <li><a class="icon" aria-label="下一篇 " href="/2017/12/21/iTerm-%E9%85%8D%E7%BD%AE%E4%BB%A3%E7%90%86/"><i class="fas fa-chevron-right" aria-hidden="true" onmouseover="$('#i-next').toggle();" onmouseout="$('#i-next').toggle();"></i></a></li>
+        
+        <li><a class="icon" aria-label="返回顶部 " href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up" aria-hidden="true" onmouseover="$('#i-top').toggle();" onmouseout="$('#i-top').toggle();"></i></a></li>
+        <li><a class="icon" aria-label="分享文章 " href="#"><i class="fas fa-share-alt" aria-hidden="true" onmouseover="$('#i-share').toggle();" onmouseout="$('#i-share').toggle();" onclick="$('#share').toggle();return false;"></i></a></li>
+      </ul>
+      <span id="i-prev" class="info" style="display:none;">上一篇</span>
+      <span id="i-next" class="info" style="display:none;">下一篇</span>
+      <span id="i-top" class="info" style="display:none;">返回顶部</span>
+      <span id="i-share" class="info" style="display:none;">分享文章</span>
+    </span>
+    <br/>
+    <div id="share" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/"><i class="fab fa-facebook " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&text=ML 术语"><i class="fab fa-twitter " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&title=ML 术语"><i class="fab fa-linkedin " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&is_video=false&description=ML 术语"><i class="fab fa-pinterest " aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ML 术语&body=Check out this article: http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/"><i class="fas fa-envelope " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&title=ML 术语"><i class="fab fa-get-pocket " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&title=ML 术语"><i class="fab fa-reddit " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&title=ML 术语"><i class="fab fa-stumbleupon " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&title=ML 术语"><i class="fab fa-digg " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&name=ML 术语&description="><i class="fab fa-tumblr " aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&t=ML 术语"><i class="fab fa-hacker-news " aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+    <div id="toc">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#A"><span class="toc-number">1.</span> <span class="toc-text">A</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#accuracy-%E7%B2%BE%E5%BA%A6"><span class="toc-number">1.1.</span> <span class="toc-text">accuracy 精度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E5%88%86%E7%B1%BB%E9%A2%84%E6%B5%8B"><span class="toc-number">1.1.1.</span> <span class="toc-text">对分类预测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E5%88%A4%E6%96%AD%E5%9E%8B%E9%A2%84%E6%B5%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text">对判断型预测</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#activation-function-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">activation function 激活函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#B"><span class="toc-number">2.</span> <span class="toc-text">B</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Bayesian-%E8%B4%9D%E5%8F%B6%E6%96%AF"><span class="toc-number">2.1.</span> <span class="toc-text">Bayesian 贝叶斯</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#C"><span class="toc-number">3.</span> <span class="toc-text">C</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cross-entropy-%E4%BA%A4%E5%8F%89%E7%86%B5"><span class="toc-number">3.1.</span> <span class="toc-text">cross-entropy 交叉熵</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#D"><span class="toc-number">4.</span> <span class="toc-text">D</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#E"><span class="toc-number">5.</span> <span class="toc-text">E</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#F"><span class="toc-number">6.</span> <span class="toc-text">F</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#G"><span class="toc-number">7.</span> <span class="toc-text">G</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#H"><span class="toc-number">8.</span> <span class="toc-text">H</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#hidden-layer-%E9%9A%90%E5%90%AB%E5%B1%82"><span class="toc-number">8.1.</span> <span class="toc-text">hidden layer 隐含层</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#I"><span class="toc-number">9.</span> <span class="toc-text">I</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#J"><span class="toc-number">10.</span> <span class="toc-text">J</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#K"><span class="toc-number">11.</span> <span class="toc-text">K</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#L"><span class="toc-number">12.</span> <span class="toc-text">L</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#logistic-regression-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B"><span class="toc-number">12.1.</span> <span class="toc-text">logistic regression 逻辑回归模型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#M"><span class="toc-number">13.</span> <span class="toc-text">M</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#N"><span class="toc-number">14.</span> <span class="toc-text">N</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#neuron-%E7%A5%9E%E7%BB%8F%E5%85%83"><span class="toc-number">14.1.</span> <span class="toc-text">neuron 神经元</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#O"><span class="toc-number">15.</span> <span class="toc-text">O</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#overfitting-%E8%BF%87%E6%8B%9F%E5%90%88"><span class="toc-number">15.1.</span> <span class="toc-text">overfitting 过拟合</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#P"><span class="toc-number">16.</span> <span class="toc-text">P</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Q"><span class="toc-number">17.</span> <span class="toc-text">Q</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#R"><span class="toc-number">18.</span> <span class="toc-text">R</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ridge-regression-weight-decay"><span class="toc-number">18.1.</span> <span class="toc-text">ridge regression(weight decay)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#S"><span class="toc-number">19.</span> <span class="toc-text">S</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#softmax-%E6%97%A0%E5%AF%B9%E5%BA%94%E4%B8%AD%E6%96%87"><span class="toc-number">19.1.</span> <span class="toc-text">softmax [无对应中文]</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#T"><span class="toc-number">20.</span> <span class="toc-text">T</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#U"><span class="toc-number">21.</span> <span class="toc-text">U</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#V"><span class="toc-number">22.</span> <span class="toc-text">V</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#W"><span class="toc-number">23.</span> <span class="toc-text">W</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#X"><span class="toc-number">24.</span> <span class="toc-text">X</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Y"><span class="toc-number">25.</span> <span class="toc-text">Y</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Z"><span class="toc-number">26.</span> <span class="toc-text">Z</span></a></li></ol>
+    </div>
+  </span>
+</div>
+
+    
+    <div class="content index py4">
+        
+        <article class="post" itemscope itemtype="http://schema.org/BlogPosting">
+  <header>
+    
+    <h1 class="posttitle" itemprop="name headline">
+        ML 术语
+    </h1>
+
+
+
+    <div class="meta">
+      <span class="author" itemprop="author" itemscope itemtype="http://schema.org/Person">
+        <span itemprop="name">Aniao</span>
+      </span>
+      
+    <div class="postdate">
+      
+        <time datetime="2018-01-02T03:38:29.000Z" itemprop="datePublished">2018-01-02</time>
+        
+      
+    </div>
+
+
+      
+
+      
+    <div class="article-tag">
+        <i class="fas fa-tag"></i>
+        <a class="tag-link-link" href="/tags/ML/" rel="tag">ML</a>
+    </div>
+
+
+    </div>
+  </header>
+  
+
+  <div class="content" itemprop="articleBody">
+    <!-- MarkdownTOC -->
+
+<ul>
+<li>A<ul>
+<li>accuracy 精度</li>
+<li>activation function 激活函数</li>
+</ul>
+</li>
+<li>B<ul>
+<li>Bayesian 贝叶斯</li>
+</ul>
+</li>
+<li>C<ul>
+<li>cross-entropy 交叉熵</li>
+</ul>
+</li>
+<li>D</li>
+<li>E</li>
+<li>F</li>
+<li>G</li>
+<li>H<ul>
+<li>hidden layer 隐含层</li>
+</ul>
+</li>
+<li>I</li>
+<li>J</li>
+<li>K</li>
+<li>L<ul>
+<li>logistic regression 逻辑回归模型</li>
+</ul>
+</li>
+<li>M</li>
+<li>N<ul>
+<li>neuron 神经元</li>
+</ul>
+</li>
+<li>O<ul>
+<li>overfitting 过拟合</li>
+</ul>
+</li>
+<li>P</li>
+<li>Q</li>
+<li>R<ul>
+<li>ridge regression(weight decay)</li>
+</ul>
+</li>
+<li>S<ul>
+<li>[softmax][无对应中文]</li>
+</ul>
+</li>
+<li>T</li>
+<li>U</li>
+<li>V</li>
+<li>W</li>
+<li>X</li>
+<li>Y</li>
+<li>Z</li>
+</ul>
+<!-- /MarkdownTOC -->
+
+
+
+<h1 id="A"><a href="#A" class="headerlink" title="A"></a>A</h1><h2 id="accuracy-精度"><a href="#accuracy-精度" class="headerlink" title="accuracy 精度"></a>accuracy 精度</h2><h3 id="对分类预测"><a href="#对分类预测" class="headerlink" title="对分类预测"></a>对分类预测</h3><p>accuracy = 分类准确个数 / 总测试数目</p>
+<h3 id="对判断型预测"><a href="#对判断型预测" class="headerlink" title="对判断型预测"></a>对判断型预测</h3><p>accuracy = (判断为’是’并预测准确的个数 + 判断为’否’并预测准确的个数) / 总测试数目</p>
+<h2 id="activation-function-激活函数"><a href="#activation-function-激活函数" class="headerlink" title="activation function 激活函数"></a>activation function 激活函数</h2><p>对输入[数组]进行加权求和, 并对其做一定处理后输出到下一层</p>
+<h1 id="B"><a href="#B" class="headerlink" title="B"></a>B</h1><h2 id="Bayesian-贝叶斯"><a href="#Bayesian-贝叶斯" class="headerlink" title="Bayesian 贝叶斯"></a>Bayesian 贝叶斯</h2><h1 id="C"><a href="#C" class="headerlink" title="C"></a>C</h1><h2 id="cross-entropy-交叉熵"><a href="#cross-entropy-交叉熵" class="headerlink" title="cross-entropy 交叉熵"></a>cross-entropy 交叉熵</h2><h1 id="D"><a href="#D" class="headerlink" title="D"></a>D</h1><h1 id="E"><a href="#E" class="headerlink" title="E"></a>E</h1><h1 id="F"><a href="#F" class="headerlink" title="F"></a>F</h1><h1 id="G"><a href="#G" class="headerlink" title="G"></a>G</h1><h1 id="H"><a href="#H" class="headerlink" title="H"></a>H</h1><h2 id="hidden-layer-隐含层"><a href="#hidden-layer-隐含层" class="headerlink" title="hidden layer 隐含层"></a>hidden layer 隐含层</h2><p>除去输入层和输出层, 其间用来对数据进行进一步计算的层</p>
+<h1 id="I"><a href="#I" class="headerlink" title="I"></a>I</h1><h1 id="J"><a href="#J" class="headerlink" title="J"></a>J</h1><h1 id="K"><a href="#K" class="headerlink" title="K"></a>K</h1><h1 id="L"><a href="#L" class="headerlink" title="L"></a>L</h1><h2 id="logistic-regression-逻辑回归模型"><a href="#logistic-regression-逻辑回归模型" class="headerlink" title="logistic regression 逻辑回归模型"></a>logistic regression 逻辑回归模型</h2><p>使用sigmoid, 常用于二元分类判断, 但是也可用于多元分类[multi-class logistic regression / multinomial regression]</p>
+<h1 id="M"><a href="#M" class="headerlink" title="M"></a>M</h1><h1 id="N"><a href="#N" class="headerlink" title="N"></a>N</h1><h2 id="neuron-神经元"><a href="#neuron-神经元" class="headerlink" title="neuron 神经元"></a>neuron 神经元</h2><p>神经网络中的一个节点, 使用activation function[激活函数]进行运算</p>
+<h1 id="O"><a href="#O" class="headerlink" title="O"></a>O</h1><h2 id="overfitting-过拟合"><a href="#overfitting-过拟合" class="headerlink" title="overfitting 过拟合"></a>overfitting 过拟合</h2><p>对数据进行训练时对数据进行了过于精确的处理, 导致训练出的模型仅对训练数据有效, 不具普适性.</p>
+<h1 id="P"><a href="#P" class="headerlink" title="P"></a>P</h1><h1 id="Q"><a href="#Q" class="headerlink" title="Q"></a>Q</h1><h1 id="R"><a href="#R" class="headerlink" title="R"></a>R</h1><h2 id="ridge-regression-weight-decay"><a href="#ridge-regression-weight-decay" class="headerlink" title="ridge regression(weight decay)"></a>ridge regression(weight decay)</h2><h1 id="S"><a href="#S" class="headerlink" title="S"></a>S</h1><h2 id="softmax-无对应中文"><a href="#softmax-无对应中文" class="headerlink" title="softmax [无对应中文]"></a>softmax [无对应中文]</h2><p>将一个数组转换成和为1的概率表示, 但是不严格遵循数字间的比例, 而是通过以下计算:<br><img src="https://wikimedia.org/api/rest_v1/media/math/render/svg/46c32a5089726d673c30a0abfda7b35ecf0fe3ca" alt="math"><br>如一系列事件产生的概率比为 </p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[1.0, 2.0, 3.0, 4.0, 1.0, 2.0, 3.0]</span><br></pre></td></tr></table></figure>
+<p>如直接按比例转换为和为1的概率, 则为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[0.0625, 0.125, 0.1875, 0.25, 0.0625, 0.125, 0.1875]</span><br></pre></td></tr></table></figure>
+<p>使用softmax计算, 则为:</p>
+<figure class="highlight plain"><table><tr><td class="gutter"><pre><span class="line">1</span><br></pre></td><td class="code"><pre><span class="line">[0.024, 0.064, 0.175, 0.475, 0.024, 0.064, 0.175]</span><br></pre></td></tr></table></figure>
+
+<h1 id="T"><a href="#T" class="headerlink" title="T"></a>T</h1><h1 id="U"><a href="#U" class="headerlink" title="U"></a>U</h1><h1 id="V"><a href="#V" class="headerlink" title="V"></a>V</h1><h1 id="W"><a href="#W" class="headerlink" title="W"></a>W</h1><h1 id="X"><a href="#X" class="headerlink" title="X"></a>X</h1><h1 id="Y"><a href="#Y" class="headerlink" title="Y"></a>Y</h1><h1 id="Z"><a href="#Z" class="headerlink" title="Z"></a>Z</h1>
+  </div>
+</article>
+
+
+
+        
+          <div id="footer-post-container">
+  <div id="footer-post">
+
+    <div id="nav-footer" style="display: none">
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+        
+      </ul>
+    </div>
+
+    <div id="toc-footer" style="display: none">
+      <ol class="toc"><li class="toc-item toc-level-1"><a class="toc-link" href="#A"><span class="toc-number">1.</span> <span class="toc-text">A</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#accuracy-%E7%B2%BE%E5%BA%A6"><span class="toc-number">1.1.</span> <span class="toc-text">accuracy 精度</span></a><ol class="toc-child"><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E5%88%86%E7%B1%BB%E9%A2%84%E6%B5%8B"><span class="toc-number">1.1.1.</span> <span class="toc-text">对分类预测</span></a></li><li class="toc-item toc-level-3"><a class="toc-link" href="#%E5%AF%B9%E5%88%A4%E6%96%AD%E5%9E%8B%E9%A2%84%E6%B5%8B"><span class="toc-number">1.1.2.</span> <span class="toc-text">对判断型预测</span></a></li></ol></li><li class="toc-item toc-level-2"><a class="toc-link" href="#activation-function-%E6%BF%80%E6%B4%BB%E5%87%BD%E6%95%B0"><span class="toc-number">1.2.</span> <span class="toc-text">activation function 激活函数</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#B"><span class="toc-number">2.</span> <span class="toc-text">B</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#Bayesian-%E8%B4%9D%E5%8F%B6%E6%96%AF"><span class="toc-number">2.1.</span> <span class="toc-text">Bayesian 贝叶斯</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#C"><span class="toc-number">3.</span> <span class="toc-text">C</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#cross-entropy-%E4%BA%A4%E5%8F%89%E7%86%B5"><span class="toc-number">3.1.</span> <span class="toc-text">cross-entropy 交叉熵</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#D"><span class="toc-number">4.</span> <span class="toc-text">D</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#E"><span class="toc-number">5.</span> <span class="toc-text">E</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#F"><span class="toc-number">6.</span> <span class="toc-text">F</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#G"><span class="toc-number">7.</span> <span class="toc-text">G</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#H"><span class="toc-number">8.</span> <span class="toc-text">H</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#hidden-layer-%E9%9A%90%E5%90%AB%E5%B1%82"><span class="toc-number">8.1.</span> <span class="toc-text">hidden layer 隐含层</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#I"><span class="toc-number">9.</span> <span class="toc-text">I</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#J"><span class="toc-number">10.</span> <span class="toc-text">J</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#K"><span class="toc-number">11.</span> <span class="toc-text">K</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#L"><span class="toc-number">12.</span> <span class="toc-text">L</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#logistic-regression-%E9%80%BB%E8%BE%91%E5%9B%9E%E5%BD%92%E6%A8%A1%E5%9E%8B"><span class="toc-number">12.1.</span> <span class="toc-text">logistic regression 逻辑回归模型</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#M"><span class="toc-number">13.</span> <span class="toc-text">M</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#N"><span class="toc-number">14.</span> <span class="toc-text">N</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#neuron-%E7%A5%9E%E7%BB%8F%E5%85%83"><span class="toc-number">14.1.</span> <span class="toc-text">neuron 神经元</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#O"><span class="toc-number">15.</span> <span class="toc-text">O</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#overfitting-%E8%BF%87%E6%8B%9F%E5%90%88"><span class="toc-number">15.1.</span> <span class="toc-text">overfitting 过拟合</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#P"><span class="toc-number">16.</span> <span class="toc-text">P</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Q"><span class="toc-number">17.</span> <span class="toc-text">Q</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#R"><span class="toc-number">18.</span> <span class="toc-text">R</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#ridge-regression-weight-decay"><span class="toc-number">18.1.</span> <span class="toc-text">ridge regression(weight decay)</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#S"><span class="toc-number">19.</span> <span class="toc-text">S</span></a><ol class="toc-child"><li class="toc-item toc-level-2"><a class="toc-link" href="#softmax-%E6%97%A0%E5%AF%B9%E5%BA%94%E4%B8%AD%E6%96%87"><span class="toc-number">19.1.</span> <span class="toc-text">softmax [无对应中文]</span></a></li></ol></li><li class="toc-item toc-level-1"><a class="toc-link" href="#T"><span class="toc-number">20.</span> <span class="toc-text">T</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#U"><span class="toc-number">21.</span> <span class="toc-text">U</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#V"><span class="toc-number">22.</span> <span class="toc-text">V</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#W"><span class="toc-number">23.</span> <span class="toc-text">W</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#X"><span class="toc-number">24.</span> <span class="toc-text">X</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Y"><span class="toc-number">25.</span> <span class="toc-text">Y</span></a></li><li class="toc-item toc-level-1"><a class="toc-link" href="#Z"><span class="toc-number">26.</span> <span class="toc-text">Z</span></a></li></ol>
+    </div>
+
+    <div id="share-footer" style="display: none">
+      <ul>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.facebook.com/sharer.php?u=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/"><i class="fab fa-facebook fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://twitter.com/share?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&text=ML 术语"><i class="fab fa-twitter fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.linkedin.com/shareArticle?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&title=ML 术语"><i class="fab fa-linkedin fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://pinterest.com/pin/create/bookmarklet/?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&is_video=false&description=ML 术语"><i class="fab fa-pinterest fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" href="mailto:?subject=ML 术语&body=Check out this article: http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/"><i class="fas fa-envelope fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://getpocket.com/save?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&title=ML 术语"><i class="fab fa-get-pocket fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://reddit.com/submit?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&title=ML 术语"><i class="fab fa-reddit fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.stumbleupon.com/submit?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&title=ML 术语"><i class="fab fa-stumbleupon fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://digg.com/submit?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&title=ML 术语"><i class="fab fa-digg fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="http://www.tumblr.com/share/link?url=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&name=ML 术语&description="><i class="fab fa-tumblr fa-lg" aria-hidden="true"></i></a></li>
+  <li><a class="icon" target="_blank" rel="noopener" href="https://news.ycombinator.com/submitlink?u=http://aniao.space/2018/01/02/ML-%E6%9C%AF%E8%AF%AD/&t=ML 术语"><i class="fab fa-hacker-news fa-lg" aria-hidden="true"></i></a></li>
+</ul>
+
+    </div>
+
+    <div id="actions-footer">
+        <a id="menu" class="icon" href="#" onclick="$('#nav-footer').toggle();return false;"><i class="fas fa-bars fa-lg" aria-hidden="true"></i> 菜单</a>
+        <a id="toc" class="icon" href="#" onclick="$('#toc-footer').toggle();return false;"><i class="fas fa-list fa-lg" aria-hidden="true"></i> 目录</a>
+        <a id="share" class="icon" href="#" onclick="$('#share-footer').toggle();return false;"><i class="fas fa-share-alt fa-lg" aria-hidden="true"></i> 分享</a>
+        <a id="top" style="display:none" class="icon" href="#" onclick="$('html, body').animate({ scrollTop: 0 }, 'fast');"><i class="fas fa-chevron-up fa-lg" aria-hidden="true"></i> 返回顶部</a>
+    </div>
+
+  </div>
+</div>
+
+        
+        <footer id="footer">
+  <div class="footer-left">
+    Copyright &copy;
+    
+    
+    2016-2021
+    Aniao
+  </div>
+  <div class="footer-right">
+    <nav>
+      <ul>
+         
+          <li><a href="/">首页</a></li>
+         
+          <li><a href="/about/">关于</a></li>
+         
+          <li><a href="/archives/">归档</a></li>
+        
+      </ul>
+    </nav>
+  </div>
+</footer>
+
+    </div>
+    <!-- styles -->
+
+
+
+  <link rel="preload" as="style" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.2/css/all.min.css" crossorigin="anonymous" onload="this.onload=null;this.rel='stylesheet'"/>
+
+
+    <!-- jquery -->
+ 
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js" crossorigin="anonymous"></script> 
+
+
+
+
+<!-- clipboard -->
+
+  
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/clipboard.js/2.0.7/clipboard.min.js" crossorigin="anonymous"></script> 
+  
+  <script type="text/javascript">
+  $(function() {
+    // copy-btn HTML
+    var btn = "<span class=\"btn-copy tooltipped tooltipped-sw\" aria-label=\"复制到粘贴板!\">";
+    btn += '<i class="far fa-clone"></i>';
+    btn += '</span>'; 
+    // mount it!
+    $(".highlight table").before(btn);
+    var clip = new ClipboardJS('.btn-copy', {
+      text: function(trigger) {
+        return Array.from(trigger.nextElementSibling.querySelectorAll('.code')).reduce((str,it)=>str+it.innerText+'\n','')
+      }
+    });
+    clip.on('success', function(e) {
+      e.trigger.setAttribute('aria-label', "复制成功!");
+      e.clearSelection();
+    })
+  })
+  </script>
+
+
+<script src="/js/main.js"></script>
+
+<!-- search -->
+
+<!-- Google Analytics -->
+
+<!-- Baidu Analytics -->
+
+<!-- Cloudflare Analytics -->
+
+<!-- Umami Analytics -->
+
+<!-- Disqus Comments -->
+
+
+</body>
+</html>
